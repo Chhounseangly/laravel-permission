@@ -4,6 +4,11 @@
 @section('content')
     <div class="w-1/2 mx-auto">
         <h2 class="font-bold text-2xl py-4">Create Role</h2>
+        @if ($errors->has('error'))
+            <div class="w-full bg-red-500 text-sm text-white rounded-sm py-2 px-1">
+                {{ $errors->first('error') }}
+            </div>
+        @endif
         <form method="POST" class="w-full flex flex-col gap-2" action="{{ route('admin.role.store') }}">
             @csrf
             <div>

@@ -18,8 +18,9 @@
     </style>
 </head>
 
-<body>
-    <main class="px-32 py-10">
+<body class="px-32 py-5">
+    @include('includes.nav_bar')
+    <main>
         @yield('content')
     </main>
 </body>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,10 +34,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::prefix('role')->name('role.')->group(function () {
             //take action with pages
             Route::name('redirect.')->group(function () {
+                //assign permission for role
+                Route::get('/{role}/assign/permission', 'assignPermission')->name('assign.permission.page');
                 Route::get('/create', 'create')->name('create.page');
                 Route::get('/{role}/edit', 'edit')->name('edit.page');
             });
             //take actions with data
+            Route::post('/save/permission', 'savePermission')->name('assign.permission.save');
             Route::post('/create', 'store')->name('store');
             Route::put('/{role}/update', 'update')->name('update');
             Route::delete('/{role}/delete', 'destroy')->name('delete');
@@ -56,6 +60,19 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
             Route::post('/create', 'store')->name('store');
             Route::put('/{permission}/update', 'update')->name('update');
             Route::delete('/{permission}/delete', 'destroy')->name('delete');
+        });
+    });
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/user', 'index')->name('user.page');
+        // start path /admin/permission
+        Route::prefix('user')->name('user.')->group(function () {
+            //take action with pages
+            Route::name('redirect.')->group(function () {
+                Route::get('/{user}/assign/permission', 'assignPermission')->name('assign.user.permission.page');
+            });
+            //take actions with data
+            Route::post('/save/user/permission', 'savePermissions')->name('assign.user.permissio.save');
         });
     });
 });

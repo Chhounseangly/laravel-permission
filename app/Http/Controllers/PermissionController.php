@@ -23,7 +23,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission = $this->permission->get();
+        $permissions = $this->permission->get();
         return view('admin.permission.index', compact('permissions'));
     }
 
@@ -41,9 +41,9 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         Permission::create([
-            'name' => $request->permisssion,
+            'name' => $request->name,
         ]);
-        return redirect()->intended('/admin/permission')>with('message', 'Added permisssion success');
+        return redirect()->intended('/admin/permission')->with('message', 'Added permisssion success');
     }
 
     /**
