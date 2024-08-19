@@ -40,7 +40,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
                 Route::get('/{role}/edit', 'edit')->name('edit.page');
             });
             //take actions with data
-            Route::post('/save/permission', 'savePermission')->name('assign.permission.save');
+            Route::post('/save/permission', 'savePermissions')->name('assign.permission.save');
             Route::post('/create', 'store')->name('store');
             Route::put('/{role}/update', 'update')->name('update');
             Route::delete('/{role}/delete', 'destroy')->name('delete');

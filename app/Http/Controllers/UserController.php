@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         // $users->load(['roles', 'permissions']);
-        $users = $this->user->withoutRole(RolesEnum::ADMIN->value)->with(['roles', 'roles.permissions']) // Eager load roles and permissions
+        $users = $this->user->withoutRole(RolesEnum::ADMIN->value)->with(['roles', 'roles.permissions']) 
             ->get();
         return view('admin.users.index', compact('users'));
     }
@@ -37,8 +37,14 @@ class UserController extends Controller
     public function savePermissions(Request $request)
     {
         $user  = User::find($request->user_id);
-        $user->givePermissionTo($request->input('permissions'));
-
+        if (empty($permissions)) {
+            // Optionally, you can handle this case differently
+            // For example, clear all permissions if no permissions are provided
+            $user->syncPermissions([]);
+        } else {
+            // Sync permissions with the provided list
+            $user->syncPermissions($permissions);
+        }
         return redirect()->back()->with('success', 'Assign permissioned successfully.');
     }
 

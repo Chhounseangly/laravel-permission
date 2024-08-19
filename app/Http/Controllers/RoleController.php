@@ -36,7 +36,7 @@ class RoleController extends Controller
         $currentRole = Role::findById($request->role_id);
         // Synchronize the permissions: 
         // Assign the selected permissions and remove any that were not selected.
-        $currentRole->syncPermissions($request->input('permissions'));
+        $currentRole->givePermissionTo($request->input('permissions'));
         return redirect()->back()->with('success', 'Assign permissioned successfully.');
     }
 
